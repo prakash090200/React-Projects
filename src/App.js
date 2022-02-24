@@ -8,21 +8,14 @@ import { BrowserRouter } from 'react-router-dom';
 // import Todo from './Project_2/Todo'
 // import Router from './Project_4/Router'
 // import Getapi from './Project_5/Getapi';
-import Pikachu_api from './Project_5/Pikachu_api';
+// import Pikachu_api from './Project_5/Pikachu_api';
+import Wordle from './Wordle/Wordle'
 
 function App() {
   return (
     <div className="App">
-      {/* <Project1/> */}
+      <Wordle/>
 
-      {/*        project 0 INC AND DESC        */}
-
-      {/* <Part1/>   
-          <Part2/>    */}
-      {/* <Todo /> */}
-      {/* <Search_dropdown/> */}
-      <Pikachu_api/>
-      {/* <BrowserRouter><Router/></BrowserRouter> */}
       
     </div>
   );
