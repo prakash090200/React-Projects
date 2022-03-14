@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react'
 import './style.css'
-// import Part1 from  './Part1'
-// import Part2 from  './Part2'
-
-import { FaBackspace } from 'react-icons/fa'
+import InputHeader from './InputHeader'
+import Matrix from './Matrix'
+import Keyboard from './Keyboard'
+import Winner from './Winner'
 
 export default function Wordle() {
     const [userInput, setuserInput] = useState("");
@@ -13,11 +13,10 @@ export default function Wordle() {
     let [count, setcount] = useState(0);
     let [rowcount, setrowcount] = useState(0);
     const refer = useRef(null);
-    const winnerref = useRef(null);
-    const gif = useRef(null);
-    const timer = useRef(null);
+    
     let [minute, setmin] = useState(0);
     let [sec, setsec] = useState(0);
+    const [winnerflag, setwinnerflag] = useState(false);
 
 
     useEffect(() => {
@@ -28,7 +27,7 @@ export default function Wordle() {
 
                 setsec(sec + 1);
                 if (sec === 59) {
-                    console.log("hi");
+
                     setmin(minute + 1);
                     setsec(0);
                 }
@@ -38,7 +37,7 @@ export default function Wordle() {
     }, [flag, sec, minute])
 
 
-    const keyBoardText = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Z", "X", "C", "V", "B", "N", "M"];
+    const [keyBoardText, setkeyBoardText] = useState(["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Z", "X", "C", "V", "B", "N", "M"]);
 
     function generateRandomString() {
         //Setting Timer
@@ -117,11 +116,12 @@ export default function Wordle() {
 
     function checkwinner(arr) {
         if (arr.length === randomString.length && arr.join("-") === randomString.join("-")) {
-            winnerref.current.style.display = "block";
-            gif.current.style.display = "block";
+
 
             setflag(false);
-            timer.current.style.display = "block";
+
+
+            setwinnerflag(true);
         }
     }
 
@@ -135,9 +135,8 @@ export default function Wordle() {
             setmin(0);
             setsec(0);
             setflag(false);
-            winnerref.current.style.display = "none";
-            gif.current.style.display = "none";
-            timer.current.style.display = "none";
+            setwinnerflag(false);
+
             if (rows)
                 for (let i = 0; i < 6; i++)
                     refer.current.removeChild(rows[i]);
@@ -147,48 +146,21 @@ export default function Wordle() {
 
     return (
         <>
-
-            <div className='userinput'>
-                <h2>Wordle</h2>
-                <br />
-                <input type="text" value={userInput} onChange={(e) => setuserInput(e.target.value)} placeholder="Enter a Number" />
-                <button className="wordlebutton" onClick={generateRandomString}>Submit</button>
-                <button className="wordlebutton" onClick={reset}>Reset</button>
-            </div>
-
-            {/* <Part1 generateRandomString={generateRandomString} reset={reset} data={userInput}/> */}
-
-            {/* Middle content  */}
+            <InputHeader generateRandomString={generateRandomString} reset={reset} setuserInput={setuserInput} userInput={userInput} />
+            
             <div className='container'>
-                <div className='matrix' ref={refer}>
-                    {/* MATRIX */}
-                </div>
 
+                <Matrix ref={refer} />
 
                 <div className='keyboard'>
-                    <div className='alphabets'>
-                        {
-                            keyBoardText.map((ele, index) => {
-                                return <button key={index} className="alphabuttons" onClick={() => clicked(ele)}>{ele}</button>
-                            })
-                        }
-                    </div>
 
+                    <Keyboard keyBoardText={keyBoardText} clicked={clicked} enter={enter} deleted={deleted} />
 
-                    <div className="click">
-                        <button className="alphabuttons" onClick={() => enter("Enter")}><b>Enter</b></button>
-                        <button className="alphabuttons" onClick={() => deleted(-100)}><FaBackspace /></button>
-                    </div>
-
-
-                    {/* Winner part */}
-                    <div className='winner' >
-                        <h1 ref={winnerref}>Winner</h1>
-                        <p><img ref={gif} src="images/excited.gif" /></p>
-                        <p ref={timer} style={{ display: "none" }}>Your new Record is {minute < 10 ? "0" + minute : minute}:{sec < 10 ? "0" + sec : sec}</p>
-                    </div>
-
+                    { winnerflag && 
+                    <Winner winnerflag={winnerflag} minute={minute} sec={sec} />
+                    }
                 </div>
+
             </div>
 
         </>

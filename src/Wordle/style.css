@@ -77,11 +77,11 @@
 }
 .winner  img{
 height:170px;
-display:none;
+
 }
 .winner h1{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    display: none;
+    
 }
 
 .wordlebutton{
