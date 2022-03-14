@@ -9,12 +9,15 @@ import { BrowserRouter } from 'react-router-dom';
 // import Router from './Project_4/Router'
 // import Getapi from './Project_5/Getapi';
 // import Pikachu_api from './Project_5/Pikachu_api';
-import Wordle from './Wordle/Wordle'
+import Wordle from './Wordle/Wordle' 
+// import  UseReducer  from './Project_6/UseReducer';       //use Reducer Hook in Raect
 
 function App() {
   return (
     <div className="App">
-      <Wordle/>
+      
+      {/* //useReducer Hook in Raect */}
+      <Wordle/>     
 
       
     </div>
